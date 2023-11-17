@@ -63,6 +63,12 @@ public abstract class FlowClass {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
+	@Override
+	public String toString() {
+		return "FlowClass [id=" + id + ", comment=" + comment + ", amount=" + amount + ", accountNumber="
+				+ accountNumber + ", effect=" + effect + ", date=" + date + "]";
+	}
 	
 	
 	

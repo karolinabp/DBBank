@@ -19,13 +19,13 @@ public class MainBank {
 	//1.3.4 Creation of the flow array
 	static ArrayList<FlowClass> flowsList = new ArrayList<FlowClass>();
 	//1.3.1 Adaptation of the table of accounts
-	static Hashtable<Integer, Account> hashAccount = new Hashtable<>();
+	public static Hashtable<Integer, Account> hashAccount = new Hashtable<>();
 	
 
 	public static void main(String[] args) {
 
 		// I'm creating 10 clients for example
-		clientsList = loadClientsList(10);
+		clientsList = loadClientsList(4);
 		displayClients(clientsList);
 		//1.2.3 Creation of the table account
 		accountsList = loadAccountsList(clientsList);
@@ -33,6 +33,18 @@ public class MainBank {
 		//1.3.1 Adaptation of the table of accounts
 		hashAccount = createHashTable(accountsList);
 		showHashSorted();
+		
+		//1.3.4 Creation of the flow array
+		flowsList = loadFlowsList();
+		//1.3.5 Updating accounts
+		updateBalances(flowsList, hashAccount);
+		displayAccounts(accountsList);
+		showHashSorted();
+		
+		//I used this code to probe that the flows are updated correctly
+//		for (FlowClass flow : flowsList) {
+//			System.out.println(flow.toString());
+//		}
 	}
 	
 	
@@ -98,10 +110,11 @@ public class MainBank {
 		hashAccount.entrySet().stream()
         .sorted(Map.Entry.comparingByValue((account1, account2) -> Double.compare(account1.getBalance(), account2.getBalance())))
         .forEach(accountHash -> System.out.println(accountHash.getValue().toString()));
+		System.out.println("");
 	}
 	
 	//1.3.4 Creation of the flow array
-	public static ArrayList<FlowClass> flows(){
+	public static ArrayList<FlowClass> loadFlowsList(){
 		ArrayList<FlowClass> flows = new ArrayList<FlowClass>();
 		//a debit of 50€ from account n°1
 		Debit debit1 = new Debit("Debit", 50, 1, true);
@@ -125,6 +138,19 @@ public class MainBank {
 		flows.add(transfer1);
 		
 		return flows;
+	}
+	
+	//1.3.5 Updating accounts
+	
+	public static void updateBalances(ArrayList<FlowClass> flows, Hashtable<Integer, Account> hashAccount) {
+		for (FlowClass flow : flows) {
+			//If the flow is a transfer it will make 2 operations 1 add and 1 remove
+			if(flow instanceof Transfer) {
+				Transfer transfer = (Transfer) flow;
+				hashAccount.get(transfer.getIssuingAccountNumber()).setBalance(flow);
+			}
+			hashAccount.get(flow.getAccountNumber()).setBalance(flow);
+		}
 	}
 	
 	

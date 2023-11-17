@@ -17,6 +17,7 @@ public abstract class Account {
 		this.accountNumber = MainBank.accountNumber;
 		this.label = label;
 		this.client = client;
+		this.balance = 0;
 	}
 	
 	//GETTERS AND SETTERS
@@ -35,9 +36,26 @@ public abstract class Account {
 	public double getBalance() {
 		return balance;
 	}
-	public void setBalance(double balance) {
-		this.balance = balance;
+	//1.3.5 Updating accounts
+	public void setBalance(FlowClass flow) {
+		 
+		if (flow instanceof Credit) {
+			this.balance += flow.getAmount();
+		}
+		else if (flow instanceof Debit) {
+			this.balance -= flow.getAmount();
+		}
+		else {
+			Transfer transfer = (Transfer) flow;
+			if(this.getAccountNumber()== transfer.getAccountNumber()) {
+				this.balance += transfer.getAmount();
+			}
+			else if (this.getAccountNumber() == transfer.getIssuingAccountNumber()) {
+				this.balance -= transfer.getAmount();
+			}
+		}
 	}
+	
 	public Client getClient() {
 		return client;
 	}
