@@ -6,7 +6,7 @@ import tests.MainBank;
 public class Client {
 	
 	private String name;
-	private String firstName;
+	private String lastName;
 	private int number;
 	
 	
@@ -15,7 +15,7 @@ public class Client {
 		MainBank.clientNumber++;
 		this.number = MainBank.clientNumber;
 		this.name = name;
-		this.firstName = firstName;
+		this.lastName = firstName;
 	}
 	
 	//GETTES AND SETTERS
@@ -25,11 +25,11 @@ public class Client {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public int getNumber() {
 		return number;
@@ -42,7 +42,7 @@ public class Client {
 	//TO STRING METHOD
 	@Override
 	public String toString() {
-		return number + "\t" + name + "\t" + firstName;
+		return number + "\t" + name + "\t" + lastName;
 	}
 	
 	

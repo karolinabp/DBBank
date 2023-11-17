@@ -1,3 +1,4 @@
+//1.2.1 Creation of the account class
 package components;
 
 import tests.MainBank;
@@ -46,7 +47,11 @@ public abstract class Account {
 
 	@Override
 	public String toString() {
-		return accountNumber + "\t" + label + "\n" + balance + "\t" + client;
+		return accountNumber + "\t" 
+				+ label + "\t" 
+				+ balance + "€\t" 
+				+ client.getName() + "\t" 
+				+ client.getLastName();
 	}
 	
 	
