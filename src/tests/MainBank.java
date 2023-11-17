@@ -14,6 +14,7 @@ public class MainBank {
 
 	public static int clientNumber = 0;
 	public static int accountNumber = 0;
+	public static int flowNumber = 0;
 
 	// I use ArrayList because is easy to keep data
 	static ArrayList<Client> clientsList = new ArrayList<Client>();
@@ -99,5 +100,7 @@ public class MainBank {
         .sorted(Map.Entry.comparingByValue((account1, account2) -> Double.compare(account1.getBalance(), account2.getBalance())))
         .forEach(accountHash -> System.out.println(accountHash.getValue().toString()));
 	}
+	
+	
 	
 }
