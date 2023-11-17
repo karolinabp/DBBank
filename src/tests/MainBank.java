@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
-import components.Account;
-import components.Client;
-import components.CurrentAccount;
-import components.SavingsAccount;
+import components.*;
 
 public class MainBank {
 
@@ -19,6 +16,8 @@ public class MainBank {
 	// I use ArrayList because is easy to keep data
 	static ArrayList<Client> clientsList = new ArrayList<Client>();
 	static ArrayList<Account> accountsList = new ArrayList<Account>();
+	//1.3.4 Creation of the flow array
+	static ArrayList<FlowClass> flowsList = new ArrayList<FlowClass>();
 	//1.3.1 Adaptation of the table of accounts
 	static Hashtable<Integer, Account> hashAccount = new Hashtable<>();
 	
@@ -101,6 +100,32 @@ public class MainBank {
         .forEach(accountHash -> System.out.println(accountHash.getValue().toString()));
 	}
 	
+	//1.3.4 Creation of the flow array
+	public static ArrayList<FlowClass> flows(){
+		ArrayList<FlowClass> flows = new ArrayList<FlowClass>();
+		//a debit of 50€ from account n°1
+		Debit debit1 = new Debit("Debit", 50, 1, true);
+		flows.add(debit1);
+		
+		for (Account account : accountsList) {
+			//A credit of 100.50€ on all current accounts in the array of accounts
+			if (account.getLabel().equalsIgnoreCase("Current")) {
+				Credit credit = new Credit("Credit", 100.50, account.getAccountNumber(), true);
+				flows.add(credit);
+			}
+			//A credit of 1500€ on all savings accounts in this same array
+			else if (account.getLabel().equalsIgnoreCase("Savings")) {
+				Credit credit = new Credit("Credit", 1500, account.getAccountNumber(), true);
+				flows.add(credit);
+			}
+		}
+		
+		//A transfer of 50 € from account n ° 1 to account n ° 2
+		Transfer transfer1 = new Transfer("Transfer", 50, 2, true, 1);
+		flows.add(transfer1);
+		
+		return flows;
+	}
 	
 	
 }

@@ -23,7 +23,7 @@ public abstract class FlowClass {
 		this.amount = amount;
 		this.accountNumber = accountNumber;
 		this.effect = effect;
-		this.date = LocalDate.now();
+		this.date = LocalDate.now().plusDays(2);
 	}
 	
 	//GETTERS AND SETTERS
