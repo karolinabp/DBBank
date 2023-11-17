@@ -7,6 +7,7 @@ import components.Client;
 public class MainBank {
 	
 	public static int clientNumber = 0;
+	public static int accountNumber = 0;
 	
 	//I use ArrayList because is easy to keep data
 	static ArrayList<Client> clientsList = new ArrayList<Client>();
