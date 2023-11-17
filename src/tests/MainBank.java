@@ -4,6 +4,8 @@ package tests;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import components.*;
 
@@ -143,14 +145,29 @@ public class MainBank {
 	//1.3.5 Updating accounts
 	
 	public static void updateBalances(ArrayList<FlowClass> flows, Hashtable<Integer, Account> hashAccount) {
-		for (FlowClass flow : flows) {
+		/*
+		 for (FlowClass flow : flows) {
 			//If the flow is a transfer it will make 2 operations 1 add and 1 remove
 			if(flow instanceof Transfer) {
 				Transfer transfer = (Transfer) flow;
 				hashAccount.get(transfer.getIssuingAccountNumber()).setBalance(flow);
 			}
 			hashAccount.get(flow.getAccountNumber()).setBalance(flow);
-		}
+			}
+		 */
+		
+		//Using Optional Predicate and Steam
+		boolean hasNegativeBalance = flows.stream().peek(flow -> {
+	            if (flow instanceof Transfer) {
+	                Transfer transfer = (Transfer) flow;
+	                hashAccount.get(transfer.getIssuingAccountNumber()).setBalance(flow);
+	            }
+	            hashAccount.get(flow.getAccountNumber()).setBalance(flow);
+	        }).flatMap(flow -> hashAccount.values().stream()).anyMatch(account -> account.getBalance() < 0); 
+		
+	    Optional.of(hasNegativeBalance).filter(Predicate.isEqual(true))
+		    .ifPresent(result -> System.out.println("Account with a negative balance"));
+		
 	}
 	
 	
