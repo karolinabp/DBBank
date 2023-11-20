@@ -44,9 +44,9 @@ public class MainBank {
 		showHashSorted();
 		
 		//I used this code to probe that the flows are updated correctly
-		for (FlowClass flow : flowsList) {
-			System.out.println(flow.toString());
-		}
+//		for (FlowClass flow : flowsList) {
+//			System.out.println(flow.toString());
+//		}
 	}
 	
 	
@@ -119,7 +119,7 @@ public class MainBank {
 	public static ArrayList<FlowClass> loadFlowsList(){
 		ArrayList<FlowClass> flows = new ArrayList<FlowClass>();
 		//a debit of 50€ from account n°1
-		Debit debit1 = new Debit("Debit", 250, 1, true);
+		Debit debit1 = new Debit("Debit", 50, 1, true);
 		flows.add(debit1);
 		
 		for (Account account : accountsList) {
@@ -153,7 +153,7 @@ public class MainBank {
 				hashAccount.get(transfer.getIssuingAccountNumber()).setBalance(flow);
 			}
 			hashAccount.get(flow.getAccountNumber()).setBalance(flow);
-		}
+		 }
 		 
 		
 		//Using Optional Predicate and Steam
