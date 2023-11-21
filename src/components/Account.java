@@ -12,6 +12,9 @@ public abstract class Account {
 	
 	
 	//CONSTRUCTOR
+	public Account() {
+		
+	}
 	public Account(String label, Client client) {
 		MainBank.accountNumber++;
 		this.accountNumber = MainBank.accountNumber;

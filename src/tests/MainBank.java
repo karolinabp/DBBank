@@ -2,6 +2,10 @@
 package tests;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -9,15 +13,20 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 
+import javax.xml.*;
+import javax.xml.xpath.XPath;
 
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import components.*;
+import components.Account;
+import components.Client;
+import components.Credit;
+import components.CurrentAccount;
+import components.Debit;
+import components.FlowClass;
+import components.SavingsAccount;
+import components.Transfer;
 
 public class MainBank {
 
@@ -57,6 +66,12 @@ public class MainBank {
 //		for (FlowClass flow : flowsList) {
 //			System.out.println(flow.toString());
 //		}
+		
+		//2.1 JSON file of flows
+		String jsonPath = "";
+		//loadFlowsFromJsonFile(jsonPath);
+		
+		
 	}
 	
 	
@@ -176,18 +191,36 @@ public class MainBank {
 		
 	}
 	
+	//2.1 JSON file of flows
 	public static void loadFlowsFromJsonFile(String filePath) {
 		
 	    try {
 	        Path jsonFilePath = Paths.get(filePath);
 	        String jsonContent = Files.readString(jsonFilePath);
 
-	        //Gson gson = new Gson();
+	        Gson gson = new Gson();
+	        ArrayList<FlowClass> loadedFlows = gson.fromJson(jsonContent, new TypeToken<ArrayList<FlowClass>>() {}.getType());
+	        flowsList.addAll(loadedFlows);
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
 	
+	//2.2 XML file of account
+	//This part is not finished
+	//I tried with DocumentBuilderFactory, DocumentBuilder, XPath and NodeList, but I got stucked in the Client part
+	public static void loadAccountsFromXml(String filePath, ArrayList<Account> accounts) {
+//	    try {
+//	        Path path = Path.of(filePath);
+//	        if (Files.exists(path)) {
+//	            ObjectMapper objectMapper;
+//	        } else {
+//	            System.out.println("XML File doesn't exist");
+//	        }
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    }
+	}
 	
 	
 	
