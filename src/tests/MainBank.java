@@ -1,11 +1,21 @@
 //1.1.2 Creation of main class for tests
 package tests;
 
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+
+
+//import com.google.gson.Gson;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import components.*;
 
@@ -165,6 +175,20 @@ public class MainBank {
 		    .ifPresent(result -> System.out.println("Account with a negative balance"));
 		
 	}
+	
+	public static void loadFlowsFromJsonFile(String filePath) {
+		
+	    try {
+	        Path jsonFilePath = Paths.get(filePath);
+	        String jsonContent = Files.readString(jsonFilePath);
+
+	        //Gson gson = new Gson();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
 	
 	
 }
