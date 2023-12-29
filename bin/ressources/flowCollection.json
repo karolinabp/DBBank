@@ -1,0 +1,14 @@
+[
+{"identifier":"debit","amount":50.0,"tragetAccountNumber":1,"effect":false,"flowDate":"31/12/1998","comment":"50€ Debit"},
+{"identifier":"credit","amount":100.5,"tragetAccountNumber":0,"effect":false,"flowDate":"31/12/1998","comment":"100.50€ Credit"},
+{"identifier":"credit","amount":100.5,"tragetAccountNumber":1,"effect":false,"flowDate":"31/12/1998","comment":"100.50€ Credit"},
+{"identifier":"credit","amount":100.5,"tragetAccountNumber":2,"effect":false,"flowDate":"31/12/1998","comment":"100.50€ Credit"},
+{"identifier":"credit","amount":100.5,"tragetAccountNumber":3,"effect":false,"flowDate":"31/12/1998","comment":"100.50€ Credit"},
+{"identifier":"credit","amount":100.5,"tragetAccountNumber":4,"effect":false,"flowDate":"31/12/1998","comment":"100.50€ Credit"},
+{"identifier":"credit","amount":1500.0,"tragetAccountNumber":0,"effect":false,"flowDate":"31/12/1998","comment":"1500€ Credit"},
+{"identifier":"credit","amount":1500.0,"tragetAccountNumber":1,"effect":false,"flowDate":"31/12/1998","comment":"1500€ Credit"},
+{"identifier":"credit","amount":1500.0,"tragetAccountNumber":2,"effect":false,"flowDate":"31/12/1998","comment":"1500€ Credit"},
+{"identifier":"credit","amount":1500.0,"tragetAccountNumber":3,"effect":false,"flowDate":"31/12/1998","comment":"1500€ Credit"},
+{"identifier":"credit","amount":1500.0,"tragetAccountNumber":4,"effect":false,"flowDate":"31/12/1998","comment":"1500€ Credit"},
+{"transferingAccountNumber":1,"identifier":"transfer","amount":50.0,"tragetAccountNumber":2,"effect":false,"flowDate":"31/12/1998","comment":"50€ Transfert from account 1 to 2"}
+]

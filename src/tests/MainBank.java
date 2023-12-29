@@ -2,10 +2,14 @@
 package tests;
 
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -14,10 +18,20 @@ import java.util.function.Predicate;
 
 
 import javax.xml.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 
 import components.Account;
 import components.Client;
@@ -191,36 +205,99 @@ public class MainBank {
 		
 	}
 	
-	//2.1 JSON file of flows
-	public static void loadFlowsFromJsonFile(String filePath) {
-		
-	    try {
-	        Path jsonFilePath = Paths.get(filePath);
-	        String jsonContent = Files.readString(jsonFilePath);
+	public static ArrayList<Account> fillAccountCollectionByXml() {
+		ArrayList<Account> accountCollection = new ArrayList<>();
 
-	        Gson gson = new Gson();
-	        ArrayList<FlowClass> loadedFlows = gson.fromJson(jsonContent, new TypeToken<ArrayList<FlowClass>>() {}.getType());
-	        flowsList.addAll(loadedFlows);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		File file = new File("src/ressources/accountCollection.xml");
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+
+			DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document doc = db.parse(file);
+			doc.getDocumentElement().normalize();
+			NodeList nodeList = doc.getElementsByTagName("account");
+			Element eElement;
+			Client tmpClient;
+			for (int itr = 0; itr < nodeList.getLength(); itr++) {
+				Node node = nodeList.item(itr);
+				System.out.println("\nNode Name :" + node.getNodeName());
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					eElement = (Element) node;
+					tmpClient = new Client(eElement.getElementsByTagName("name").item(0).getTextContent(),
+							eElement.getElementsByTagName("firstName").item(0).getTextContent());
+		
+					accountCollection.add(new Account(eElement.getElementsByTagName("label").item(0).getTextContent(),tmpClient) {
+					}) ;
+
+				}
+			}
+
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return accountCollection;
 	}
 	
-	//2.2 XML file of account
-	//This part is not finished
-	//I tried with DocumentBuilderFactory, DocumentBuilder, XPath and NodeList, but I got stucked in the Client part
-	public static void loadAccountsFromXml(String filePath, ArrayList<Account> accounts) {
-//	    try {
-//	        Path path = Path.of(filePath);
-//	        if (Files.exists(path)) {
-//	            ObjectMapper objectMapper;
-//	        } else {
-//	            System.out.println("XML File doesn't exist");
-//	        }
-//	    } catch (IOException e) {
-//	        e.printStackTrace();
-//	    }
-	}
+	//2.1 JSON file of flows
+//	public static ArrayList<FlowClass> fillFlowCollectionJson() {
+//		ArrayList<FlowClass> flows = new ArrayList<>();
+//		try {
+////			System.out.println("fillFlowJson");
+//
+//			JSONParser jsonParser = new JSONParser();
+//			FileReader fileReader = new FileReader("src/ressources/flowCollection.json");
+//			JSONArray jsArr = (JSONArray) jsonParser.parse(fileReader);
+//
+////			System.out.println("arr");
+////			System.out.println(jsArr);
+//
+//			jsArr.forEach(data -> {
+//				try {
+//					flows.add(parseFlow((JSONObject) data));
+//				} catch (ParseException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			});
+//
+//		} catch (Exception e) {
+//			System.out.println("An error occurred.");
+//			e.printStackTrace();
+//		}
+//		return flows;
+//
+//	}
+	
+//	public static FlowClass parseFlow(JSONObject data) throws ParseException {
+//		FlowClass flow;
+//		switch ((String) data.get("identifier")) {
+//		case "transfer": {
+//
+//			flow = new Transfer((String) data.get("comment"),(Double) data.get("amount"), (int) (long) data.get("tragetAccountNumber"),
+//					(boolean) data.get("effect"),
+//					(int) (long) data.get("transferingAccountNumber"));
+//			break;
+//		}
+//		case "credit": {
+//			flow = new Credit((String) data.get("comment"),(Double) data.get("amount"), (int) (long) data.get("tragetAccountNumber"),
+//					(boolean) data.get("effect"))
+//					;
+//			break;
+//		}
+//		case "debit": {
+//			flow = new Debit((String) data.get("comment"),(Double) data.get("amount"), (int) (long) data.get("tragetAccountNumber"),
+//					(boolean) data.get("effect")
+//					);
+//			break;
+//		}
+//		default:
+//			throw new IllegalArgumentException("Unexpected value: " + data.get("identifier"));
+//		}
+//		return flow;
+//
+//	}
 	
 	
 	
